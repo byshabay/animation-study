@@ -68,17 +68,6 @@ body {
     }
 }
 
-.cat {
-    width: 50%;
-    display: block;
-    
-    animation:  cat 3s linear infinite alternate ;    
-}
-
-.cat img {
-    width: 100%;
-}
-
 @keyframes cat {
     from {
         margin-left: 0;
