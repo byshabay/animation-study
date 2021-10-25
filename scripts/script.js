@@ -1,13 +1,6 @@
 $(document).ready(function () {
 
     // 1.VERTICAL SCROLL TO HORIZONTAL SCROLL START
-    // window.addEventListener('wheel', function (event) {
-    //     event.preventDefault();
-
-    //     window.scrollBy({
-    //         left: event.deltaY < 0 ? -200 : 200,
-    //     });
-    // }, { passive: false });
 
     var blocks = document.getElementsByClassName("block");
     var container = document.getElementsByClassName("container");
@@ -20,26 +13,35 @@ $(document).ready(function () {
 
     // 2.ACTIVATE ANIMATION WHEN SCROLL START
 
-    $(function () {
-        $('#progressDiv').progressbar({
-            value: 21
-        });
-    });
-    window.addEventListener('wheel', animationOn, { passive: false });
+    window.addEventListener('wheel', animationOn, { passive: false }); // WHEEL LISTENER
+
     var currentWidth = $('.horizontal-scroll').width();
-    var coefficient = currentWidth / $(window).width();
-    $('.progress-bar').width(currentWidth);
+
+    var bodyWidth = $('#body').width();
 
     function animationOn(event) {
         event.preventDefault();
         $(".car-wrapper").css({ 'animation-play-state': 'running' });
+
+        //  PROGRESS BAR COUNT CHANGES WHEN SCROLL START
+
         var matrix = $('.horizontal-scroll').css('transform').replace(/[^0-9\-.,]/g, '').split(',');
-        var progressPercent = (-matrix[4] * 100) / currentWidth
-        $("#progress").changePercent(progressPercent.toFixed());
-        console.log(-matrix[4]);
+
+        var progressPercent = (-matrix[4] * 100) / (currentWidth - bodyWidth);
 
         if (
-            event.deltaY > 0
+            !progressPercent
+        ) {
+            $("#progress").changePercent(0);
+        }
+        else {
+            $("#progress").changePercent(progressPercent.toFixed());
+        }
+
+        //  PROGRESS BAR COUNT CHANGES WHEN SCROLL END
+
+        if (
+            event.deltaY > 0 // FORWARD SCROLL
         ) {
             $(':animated').stop();
             $(".car-wrapper").animate({
@@ -52,7 +54,7 @@ $(document).ready(function () {
 
 
         } else if (
-            event.deltaY < 0
+            event.deltaY < 0 // BACK SCROLL
         ) {
             $(':animated').stop();
             $('.car-wrapper').animate({
@@ -66,6 +68,11 @@ $(document).ready(function () {
 
     }
 
+    /**
+     * Удаляет все движение анимации раз в секунду. 
+     * Функционал остановки анимации, когда нет скролла.
+     */
+
     setInterval(function () {
         $(':animated').stop();
         $(".car-wrapper, ._forward, ._back").css({ 'animation-play-state': 'paused' });
@@ -73,7 +80,8 @@ $(document).ready(function () {
 
     // 2.ACTIVATE ANIMATION WHEN SCROLL END
 
-    // 3.PROGRESS BAR START
+    // 3.PROGRESS BAR INITIALIZATION START
+
     $("#progress").progressBar({
         width: $(window).width,
         height: 20,
@@ -82,8 +90,7 @@ $(document).ready(function () {
         split: 1
     });
 
-
-    // 3.PROGRESS BAR END
+    // 3.PROGRESS BAR INITIALIZATION END
 
 });
 
