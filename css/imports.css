@@ -3,3 +3,9 @@
 @import url('normalize.css');
 
 /* 1.NORMALIZE END */
+
+/* 2.PROGRESSBAR START */
+
+@import url('tinytools.progressbar.min.css');
+
+/* 2.PROGRESSBAR END */

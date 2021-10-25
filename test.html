@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- JQUERY -->
+    <script src="scripts/jquery.min.js"></script>
+    <script src="scripts/tinytools.progressbar.min.js"></script>
+
+    <link rel="stylesheet" href="css/tinytools.progressbar.min.css">
+
+    <style>
+        :root {
+            --path: path("M1 52C36 40 90 4.00001 309 59C528 114 614 2.00001 746 1.00001C878 6.16722e-06 914 43 1073 15C1200.2 -7.39999 1345.33 5.66667 1402 15");
+        }
+
+        body {
+            height: 100px;
+        }
+
+        .root {
+            height: 20px;
+            width: 20px;
+            background-color: red;
+            offset-path: var(--path);
+            margin-left: 20%;
+
+        }
+
+        .test {
+            height: 20px;
+            width: 20px;
+            background-color: red;
+
+            offset-path: var(--path);
+        }
+
+        ._scroll {
+            animation: move 10s infinite;
+        }
+
+        ._back_scroll {
+            animation: backmove 10s infinite;
+        }
+
+        @keyframes backmove {
+
+            100% {
+                margin-left: 0%;
+            }
+        }
+
+
+        @keyframes move {
+            0% {
+                margin-left: inherit;
+            }
+
+            100% {
+                margin-left: 50%;
+            }
+        }
+    </style>
+
+</head>
+
+<body id="block">
+    <!-- <svg width="1403" height="75" viewBox="0 0 1403 75" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M1 52C36 40 90 4.00001 309 59C528 114 614 2.00001 746 1.00001C878 6.16722e-06 914 43 1073 15C1200.2 -7.39999 1345.33 5.66667 1402 15"
+            stroke="black" />
+    </svg> -->
+
+    <svg width="1403" height="75">
+        <path d="M 0,20 h100" pathLength="10" />
+    </svg>
+
+    <div class="root">
+
+    </div>
+
+    <div class="test">
+
+    </div>
+    <button class="click">
+        click
+    </button>
+
+    <button class="back">
+        click2
+    </button>
+    <div id="progressDiv"></div>
+
+    <div id="progress"></div>
+    <script>
+        $(document).ready(function () {
+            $("#progress").progressBar({
+                width: $(window).width,
+                height: 20,
+                percent: 17,
+                showPercent: true,
+                split: 1
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+            $('#progressDiv').progressbar({
+                value: 21
+            });
+        });
+
+        $('.click').on('click', function () {
+            $('.test').addClass('anim1');
+            $('.anim2').removeClass('anim2');
+            $(".anim1").animate({
+                "offset-distance": "20%",
+            }, 1500, "linear");
+        });
+
+        $('.back').on('click', function () {
+            $('.test').addClass('anim2');
+            $('.anim1').removeClass('anim1');
+            $(':animated').stop();
+            $(".anim2").animate({
+                "offset-distance": "0%",
+            }, 1500, "linear");
+            console.log('click');
+        })
+
+        // setInterval(function () {
+        //     console.log($('.root').position().left);
+        // }, 1000);
+
+
+        // window.addEventListener('wheel', animationOn, { passive: false });
+
+        // function animationOn(event) {
+        //     event.preventDefault();
+        //     $(".root").css({ 'animation-play-state': 'running' })
+        //     if (
+        //         event.deltaY > 0
+        //     ) {
+        //         $(".root").addClass('_scroll');
+        //         $(".root").removeClass('_back_scroll');
+
+        //         $(".root").css({ 'animation-direction': 'normal' });
+        //     } else if (
+        //         event.deltaY < 0
+        //     ) {
+        //         $(".root").removeClass('_scroll');
+        //         $(".root").animate({
+        //             "margin-left": "0%",
+        //         })
+
+        //         var br = getPos(document.querySelector('.root'));
+
+        //     }
+
+        // }
+
+        // function getPos(el) {
+        //     var rect = el.getBoundingClientRect();
+        //     return { x: rect.left, y: rect.top };
+        // }
+
+        // setInterval(function () {
+        //     $(".root").css({ 'animation-play-state': 'paused' });
+        // }, 1000);
+    </script>
+
+</body>
+
+</html>

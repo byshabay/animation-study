@@ -2,13 +2,14 @@
 
 :root{
     --path: path("M1 52C36 40 90 4.00001 309 59C528 114 614 2.00001 746 1.00001C878 6.16722e-06 914 43 1073 15C1200.2 -7.39999 1345.33 5.66667 1402 15");
+    --light-grey: #D6E0D5;
+    --progres: #BE59EB;
 }
 
 html,
 body {
     margin: 0;
     padding: 0;
-    width: 100%;
     height: 100%;
     color: #161616;
     overflow: hidden;
@@ -23,11 +24,10 @@ body {
 .car-wrapper {
     position: absolute;
     bottom: 50%;
-    left: 0;
     z-index: 99;
 
     offset-path: var(--path);
-    animation: move 10s linear infinite;
+    offset-anchor: left bottom;
 }
 
 .car {
@@ -43,7 +43,15 @@ body {
     width: 8%;
     bottom: 5px;
     left: 8%;
-    animation: rotate 3s linear infinite ;    
+ 
+}
+
+._forward {
+    animation: rotate 1s infinite linear;
+}
+
+._back {
+    animation: rotate 1s reverse infinite linear;
 }
 
 .wheel-front {
@@ -55,18 +63,11 @@ body {
 
 /* 1.3.CAR ANIMATION START */
 
-@keyframes move {
-    100% { 
-      offset-distance: 100%;
-    }
- }
-
 @keyframes rotate {
    to {
        transform: rotate(360deg);
     }
 }
-
 
 /* 1.3.CAR ANIMATION END */
 
@@ -101,4 +102,16 @@ body {
 }
 
 /* 2.BACKGROUND END */
+
+/* 3.PROGRESS BAR START */
+
+#progress {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    height: 5vh;
+    z-index: 10000;
+}
+
+/* 3.PROGRESS BAR END */
 
