@@ -22,7 +22,6 @@ $(document).ready(function () {
     function animationOn(event) {
         event.preventDefault();
         $(".car-wrapper").css({ 'animation-play-state': 'running' });
-
         //  PROGRESS BAR COUNT CHANGES WHEN SCROLL START
 
         var matrix = $('.horizontal-scroll').css('transform').replace(/[^0-9\-.,]/g, '').split(',');
@@ -41,11 +40,12 @@ $(document).ready(function () {
         //  PROGRESS BAR COUNT CHANGES WHEN SCROLL END
 
         if (
-            event.deltaY > 0 // FORWARD SCROLL
+            event.deltaY > 0 &&
+            progressPercent < 98 // FORWARD SCROLL
         ) {
             $(':animated').stop();
             $(".car-wrapper").animate({
-                "offset-distance": "100%",
+                "offset-distance": "90%",
             }, 2000, 'linear');
 
             $(".common-wheel").addClass('_forward');
@@ -54,12 +54,13 @@ $(document).ready(function () {
 
 
         } else if (
-            event.deltaY < 0 // BACK SCROLL
+            event.deltaY < 0 &&
+            progressPercent > 1 // BACK SCROLL
         ) {
             $(':animated').stop();
             $('.car-wrapper').animate({
-                'offset-distance': '0%',
-            }, 2000, 'linear');
+                'offset-distance': '10%',
+            }, 1000, 'linear');
 
             $(".common-wheel").addClass('_back');
             $(".common-wheel").removeClass('_forward');

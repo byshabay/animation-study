@@ -23,15 +23,19 @@ body {
 
 .car-wrapper {
     position: absolute;
-    bottom: 50%;
+    bottom: 12%;
     z-index: 99;
+    width: 30%;
+    left: 0;
 
     offset-path: var(--path);
-    offset-anchor: left bottom;
+    offset-anchor: center;
+    offset-position: bottom;
+    offset-distance: 10%;
 }
 
 .car {
-    width: 50%;
+    width: 100%;
 }
 
 /* 1.1.CAR BODY END */
@@ -40,9 +44,9 @@ body {
 
 .common-wheel {
     position: absolute;
-    width: 8%;
+    width: 16%;
     bottom: 5px;
-    left: 8%;
+    left: 16%;
  
 }
 
@@ -55,7 +59,7 @@ body {
 }
 
 .wheel-front {
-    left: 37%;
+    left: 74%;
 }
 
 
@@ -114,4 +118,18 @@ body {
 }
 
 /* 3.PROGRESS BAR END */
+
+/* 4.PATH START */
+
+.path {
+    position: absolute;
+    bottom: 0;
+    height: 180px;
+    width: 100%;
+
+    background: url('../images/bg-1.png') center / cover no-repeat;
+
+}
+
+/* 4.PATH END */
 
