@@ -19,9 +19,48 @@ $(document).ready(function () {
 
     var bodyWidth = $('#body').width();
 
+    $(document).keydown(function (e) {
+        e.preventDefault();
+        //  PROGRESS BAR COUNT CHANGES WHEN SCROLL START
+
+        var matrix = $('.horizontal-scroll').css('transform').replace(/[^0-9\-.,]/g, '').split(',');
+
+        var progressPercent = (-matrix[4] * 100) / (currentWidth - bodyWidth);
+
+        if (
+            !progressPercent
+        ) {
+            $("#progress").changePercent(0);
+        }
+        else {
+            $("#progress").changePercent(progressPercent.toFixed());
+        }
+
+        //  PROGRESS BAR COUNT CHANGES WHEN SCROLL END
+
+
+        var code = e.keyCode;
+        if (
+            (code == 39 ||
+                code == 40) && (
+                progressPercent < 95
+            )
+        ) {
+            scrollAnomation('forward');
+        } else if (
+            (code == 37 ||
+                code == 38) &&
+            progressPercent
+        ) {
+            scrollAnomation('back');
+        }
+
+    });
+
     function animationOn(event) {
         event.preventDefault();
         $(".car-wrapper").css({ 'animation-play-state': 'running' });
+
         //  PROGRESS BAR COUNT CHANGES WHEN SCROLL START
 
         var matrix = $('.horizontal-scroll').css('transform').replace(/[^0-9\-.,]/g, '').split(',');
@@ -43,6 +82,24 @@ $(document).ready(function () {
             event.deltaY > 0 &&
             progressPercent < 98 // FORWARD SCROLL
         ) {
+            scrollAnomation('forward');
+
+        } else if (
+            event.deltaY < 0 &&
+            progressPercent > 1 // BACK SCROLL
+        ) {
+            scrollAnomation('back');
+        }
+
+    }
+
+    // ANIMATION ACTIVATE FUNCTION START
+
+    function scrollAnomation(direction) {
+
+        if (
+            direction == 'forward' // FORWARD SCROLL
+        ) {
             $(':animated').stop();
             $(".car-wrapper").animate({
                 "offset-distance": "90%",
@@ -51,11 +108,8 @@ $(document).ready(function () {
             $(".common-wheel").addClass('_forward');
             $(".common-wheel").removeClass('_back');
             $("._forward").css({ 'animation-play-state': 'running' })
-
-
-        } else if (
-            event.deltaY < 0 &&
-            progressPercent > 1 // BACK SCROLL
+        } else if ( // BACK SCROLL
+            direction == 'back'
         ) {
             $(':animated').stop();
             $('.car-wrapper').animate({
@@ -66,8 +120,9 @@ $(document).ready(function () {
             $(".common-wheel").removeClass('_forward');
             $("._back").css({ 'animation-play-state': 'running' });
         }
-
     }
+
+    // ANIMATION ACTIVATE FUNCTION END
 
     /**
      * Удаляет все движение анимации раз в секунду. 
